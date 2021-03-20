@@ -62,29 +62,7 @@ export default {
   data(){
     return {
       baskets:[],
-      getMenuItems: {
-       1: {
-         'name':'读者',
-         'description':'知识杀手',
-         'options':[
-           {'size':1,'price':38},{'size':4,'price':48}
-         ]
-       },
-       2: {
-         'name':'意林',
-         'description':'知识杀手',
-         'options':[
-           {'size':2,'price':38},{'size':5,'price':48}
-         ]
-       },
-       3: {
-         'name':'青年文摘',
-         'description':'知识杀手',
-         'options':[
-           {'size':3,'price':38},{'size':6,'price':48}
-         ]
-       },
-      }
+      // getMenuItems: {}
     }
   },
   computed:{
@@ -97,9 +75,38 @@ export default {
       }
 
       return totalCost
+    },
+    getMenuItems(){
+      //在vuex中获取数据
+      // return this.$store.state.menuItems
+      //通过getters获取数据
+      return this.$store.getters.getMenuItems
     }
   },
+  created(){
+    this.fetchData()
+  },
   methods: {
+    fetchData(){
+      // fetch("https://vue2-library-default-rtdb.firebaseio.com/menu.json")
+      // .then(res=>{
+      //   return res.json() //把请求的返回值转化成JSON格式
+      // })
+      // .then(data => {
+      //   this.getMenuItems = data
+      // })
+
+      //单页引用axios
+      // axios.get("menu.json")
+      //      .then(res => this.getMenuItems = res.data)
+
+      //全局引用axios
+      // this.http.get("menu.json")
+      //          .then(res => this.getMenuItems = res.data)
+
+      //将请求下来的数据存储到vuex中
+      this.http.get("menu.json").then(res=>this.$store.commit("setMenuItems",res.data))
+    },
     addToBasket(item,option){
       let basket = {
         name:item.name,

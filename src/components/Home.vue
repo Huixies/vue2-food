@@ -22,7 +22,7 @@ export default {
 <style scoped>
   #home {
     background: url('../assets/library.jpg') 100%;
-    height: 80vh;
+    height: 70vh;
     padding: 10%;
     border-radius: 10px;
     margin-top: 5%;
