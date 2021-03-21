@@ -13,7 +13,7 @@
               <label for="password">密码</label>
               <input type="password" class="form-control" v-model="password">
             </div>
-            <button type="submit" class="btn btn-block btn-success">登录</button>
+            <button @click="onSubmit" type="submit" class="btn btn-block btn-success">登录</button>
           </form>
         </div>
       </div>
@@ -30,7 +30,29 @@ export default {
     }
   },
   methods:{
-    onSubmit(){}
+    onSubmit(){
+      this.http.get('/users.json')
+               .then(res => {
+                const data = res.data
+                const users = []
+                for(let key in data){
+                  const user = data[key]
+                  users.push(user)
+                }
+
+                let result = users.filter((user)=>{
+                  return user.email ===this.email &&
+                  user.password === this.password;
+                })
+
+                //判断result的长度是否大于0
+                if(result != null && result.length >0){
+                  this.$router.push('/')
+                }else{
+                  alert("账号或密码错误")
+                }
+              })
+    }
   }
 }
 </script>

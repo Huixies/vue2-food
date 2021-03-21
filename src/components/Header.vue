@@ -29,10 +29,10 @@
 export default {
   computed:{
     currentUser(){
-      return this.$store.getter.currentUser
+      return this.$store.getters.currentUser
     },
     isLogin(){
-      return this.$store.getter.isLogin
+      return this.$store.getters.isLogin
     }
   }
 }

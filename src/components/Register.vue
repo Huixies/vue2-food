@@ -17,7 +17,7 @@
               <label for="confirm-password">确认密码</label>
               <input type="password" class="form-control" v-model="confirmPassword">
             </div>
-            <button type="submit" class="btn btn-block btn-success">注册</button>
+            <button @click="onSubmit" type="submit" class="btn btn-block btn-success">注册</button>
           </form>
         </div>
       </div>
@@ -35,7 +35,19 @@ export default {
     }
   },
   methods:{
-    onSubmit(){}
+    onSubmit(){
+      if(this.password === this.confirmPassword){
+        const formData = {
+          email:this.email,
+          password:this.password,
+          confirmPassword:this.confirmPassword
+        }
+        this.http.post('/users.json',formData)
+                 .then(res=>this.$router.push('/login'))
+      }else{
+        alert("两次密码不一致")
+      }
+    }
   }
 }
 </script>
